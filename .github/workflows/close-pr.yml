@@ -9,7 +9,7 @@ permissions:
 jobs:
   comment-and-label:
     runs-on: ubuntu-latest
-    if: github.repository == 'feat/prebuild-0.80.1'
+    if: github.repository == 'master'
     steps:
       - uses: actions/github-script@v6
         with:
