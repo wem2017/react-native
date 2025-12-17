@@ -1,5 +1,5 @@
 {
-  "name": "react-native",
+  "name": "@momo-kits/react-native",
   "version": "0.80.1",
   "description": "A framework for building native apps using React",
   "license": "MIT",

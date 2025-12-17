@@ -1,5 +1,5 @@
 {
-  "name": "react-native",
+  "name": "@momo-kits/react-native",
   "version": "1000.0.0",
   "description": "fake react native package",
   "dependencies": {

@@ -126,8 +126,6 @@ runs:
       run: yarn build-types
     # Continue with publish steps
     - name: Set npm credentials
-      if: ${{ inputs.release-type == 'release' ||
-        inputs.release-type == 'nightly' }}
       shell: bash
       run: echo "//registry.npmjs.org/:_authToken=${{ inputs.gha-npm-token }}" > ~/.npmrc
     - name: Publish NPM
