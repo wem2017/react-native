@@ -6,7 +6,7 @@ on:
 
 jobs:
   check-for-reproducer:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: |
       github.repository == 'master' && github.event.issue.pull_request == null && github.event.issue.state == 'open' && !contains(github.event.issue.labels.*.name, ':open_umbrella: Umbrella')
     steps:

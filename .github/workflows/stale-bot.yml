@@ -4,7 +4,7 @@ on:
     - cron: "*/10 5 * * *"
 jobs:
   stale:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: github.repository == 'master'
     permissions:
       issues: write
@@ -21,7 +21,7 @@ jobs:
           exempt-issue-labels: 'Help Wanted :octocat:, Good first issue, Never gets stale, Issue: Author Provided Repro'
           exempt-pr-labels: 'Help Wanted :octocat:, Never gets stale'
   stale-asc:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: github.repository == 'master'
     permissions:
       issues: write
@@ -39,7 +39,7 @@ jobs:
           exempt-issue-labels: 'Help Wanted :octocat:, Good first issue, Never gets stale, Issue: Author Provided Repro'
           exempt-pr-labels: 'Help Wanted :octocat:, Never gets stale'
   stale-needs-author-feedback:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: github.repository == 'master'
     permissions:
       issues: write
@@ -57,7 +57,7 @@ jobs:
           exempt-issue-labels: "Help Wanted :octocat:, Good first issue, Never gets stale, Issue: Author Provided Repro"
           exempt-pr-labels: "Help Wanted :octocat:, Never gets stale"
   stale-needs-author-feedback-asc:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: github.repository == 'master'
     permissions:
       issues: write

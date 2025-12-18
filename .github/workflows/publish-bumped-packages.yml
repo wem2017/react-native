@@ -8,7 +8,7 @@ on:
 
 jobs:
   publish_bumped_packages:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       GHA_NPM_TOKEN: ${{ secrets.GHA_NPM_TOKEN }}
     steps:

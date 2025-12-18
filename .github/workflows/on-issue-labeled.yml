@@ -12,7 +12,7 @@ jobs:
   # Runs automatic checks on issues labeled with "Needs: Triage",
   # then invokes actOnLabel to react to any added labels
   triage-issue:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: "${{ github.repository == 'master' && contains(github.event.label.name, 'Needs: Triage :mag:') }}"
     steps:
       - name: Checkout code
@@ -48,7 +48,7 @@ jobs:
 
   # Reacts to the label that triggered this workflow (added manually or via other workflows)
   act-on-label:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: github.repository == 'master'
     steps:
       - uses: actions/checkout@v4

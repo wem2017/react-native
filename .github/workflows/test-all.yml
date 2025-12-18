@@ -15,7 +15,7 @@ on:
 
 jobs:
   set_release_type:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       RELEASE_TYPE: ${{ steps.set_release_type.outputs.RELEASE_TYPE }}
     env:
@@ -38,7 +38,7 @@ jobs:
           echo "Should I run E2E tests? ${{ inputs.run-e2e-tests }}"
 
   prepare_hermes_workspace:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       HERMES_WS_DIR: /tmp/hermes
       HERMES_VERSION_FILE: packages/react-native/sdks/.hermesversion
@@ -56,7 +56,7 @@ jobs:
           hermes-version-file: ${{ env.HERMES_VERSION_FILE }}
 
   build_hermesc_apple:
-    runs-on: macos-14
+    runs-on: self-hosted
     needs: prepare_hermes_workspace
     env:
       HERMES_WS_DIR: /tmp/hermes
@@ -70,7 +70,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   build_apple_slices_hermes:
-    runs-on: macos-14
+    runs-on: self-hosted
     needs: [build_hermesc_apple, prepare_hermes_workspace]
     env:
       HERMES_WS_DIR: /tmp/hermes
@@ -96,7 +96,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   build_hermes_macos:
-    runs-on: macos-14
+    runs-on: self-hosted
     needs: [build_apple_slices_hermes, prepare_hermes_workspace]
     env:
       HERMES_WS_DIR: /tmp/hermes
@@ -121,7 +121,7 @@ jobs:
     secrets: inherit
 
   test_ios_rntester_ruby_3_2_0:
-    runs-on: macos-14
+    runs-on: self-hosted
     needs:
       [build_apple_slices_hermes, prepare_hermes_workspace, build_hermes_macos, prebuild_apple_dependencies]
     env:
@@ -138,7 +138,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   test_ios_rntester_dynamic_frameworks:
-    runs-on: macos-14
+    runs-on: self-hosted
     needs:
       [build_apple_slices_hermes, prepare_hermes_workspace, build_hermes_macos, prebuild_apple_dependencies]
     env:
@@ -161,7 +161,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   test_ios_rntester:
-    runs-on: macos-14-large
+    runs-on: self-hosted
     needs:
       [build_apple_slices_hermes, prepare_hermes_workspace, build_hermes_macos, prebuild_apple_dependencies]
     env:
@@ -197,7 +197,7 @@ jobs:
 
   test_e2e_ios_rntester:
     if: ${{ github.ref == 'refs/heads/main' || contains(github.ref,  'stable') || inputs.run-e2e-tests }}
-    runs-on: macos-14-large
+    runs-on: self-hosted
     needs:
       [test_ios_rntester]
     env:
@@ -233,7 +233,7 @@ jobs:
 
   test_e2e_ios_templateapp:
     if: ${{ github.ref == 'refs/heads/main' || contains(github.ref,  'stable') || inputs.run-e2e-tests }}
-    runs-on: macos-14-large
+    runs-on: self-hosted
     needs: [build_npm_package, prebuild_apple_dependencies]
     env:
       HERMES_WS_DIR: /tmp/hermes
@@ -326,7 +326,7 @@ jobs:
 
   test_e2e_android_templateapp:
     if: ${{ github.ref == 'refs/heads/main' || contains(github.ref,  'stable') || inputs.run-e2e-tests }}
-    runs-on: 4-core-ubuntu
+    runs-on: self-hosted
     needs: build_npm_package
     continue-on-error: true
     strategy:
@@ -409,7 +409,7 @@ jobs:
           architecture: ${{ matrix.architecture }}
 
   build_hermesc_linux:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: prepare_hermes_workspace
     env:
       HERMES_WS_DIR: /tmp/hermes
@@ -424,7 +424,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   build_hermesc_windows:
-    runs-on: windows-2025
+    runs-on: self-hosted
     needs: prepare_hermes_workspace
     env:
       HERMES_WS_DIR: 'D:\tmp\hermes'
@@ -443,7 +443,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   build_android:
-    runs-on: 8-core-ubuntu
+    runs-on: self-hosted
     needs: [set_release_type]
     container:
       image: reactnativecommunity/react-native-android:latest
@@ -464,7 +464,7 @@ jobs:
 
   test_e2e_android_rntester:
     if: ${{ github.ref == 'refs/heads/main' || contains(github.ref,  'stable') || inputs.run-e2e-tests }}
-    runs-on: 4-core-ubuntu
+    runs-on: self-hosted
     needs: [build_android]
     strategy:
       fail-fast: false
@@ -496,7 +496,7 @@ jobs:
           flavor: ${{ matrix.flavor }}
 
   build_npm_package:
-    runs-on: 8-core-ubuntu
+    runs-on: self-hosted
     needs:
       [
         set_release_type,
@@ -525,7 +525,7 @@ jobs:
           gradle-cache-encryption-key: ${{ secrets.GRADLE_CACHE_ENCRYPTION_KEY }}
 
   test_android_helloworld:
-    runs-on: 4-core-ubuntu
+    runs-on: self-hosted
     needs: build_npm_package
     container:
       image: reactnativecommunity/react-native-android:latest
@@ -591,7 +591,7 @@ jobs:
           compression-level: 0
 
   test_ios_helloworld_with_ruby_3_2_0:
-    runs-on: macos-14
+    runs-on: self-hosted
     needs: [prepare_hermes_workspace, build_hermes_macos, prebuild_apple_dependencies] # prepare_hermes_workspace must be there because we need its reference to retrieve a couple of outputs
     env:
       PROJECT_NAME: iOSTemplateProject
@@ -609,7 +609,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   test_ios_helloworld:
-    runs-on: macos-14
+    runs-on: self-hosted
     needs: [prepare_hermes_workspace, build_hermes_macos, prebuild_apple_dependencies] # prepare_hermes_workspace must be there because we need its reference to retrieve a couple of outputs
     strategy:
       matrix:
@@ -637,7 +637,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   test_js:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
@@ -651,7 +651,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
   lint:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:

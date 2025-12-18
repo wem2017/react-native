@@ -11,7 +11,7 @@ on:
 
 jobs:
   monitor-issues:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: github.repository == 'master'
     steps:
       - name: Checkout

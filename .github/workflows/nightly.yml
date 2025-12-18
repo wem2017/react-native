@@ -8,7 +8,7 @@ on:
 
 jobs:
   set_release_type:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: github.repository == 'master'
     outputs:
       RELEASE_TYPE: ${{ steps.set_release_type.outputs.RELEASE_TYPE }}
@@ -22,7 +22,7 @@ jobs:
           echo "RELEASE_TYPE=nightly" >> $GITHUB_OUTPUT
 
   prepare_hermes_workspace:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       HERMES_WS_DIR: /tmp/hermes
       HERMES_VERSION_FILE: packages/react-native/sdks/.hermesversion
@@ -40,7 +40,7 @@ jobs:
           hermes-version-file: ${{ env.HERMES_VERSION_FILE }}
 
   build_hermesc_apple:
-    runs-on: macos-14
+    runs-on: self-hosted
     needs: prepare_hermes_workspace
     env:
       HERMES_WS_DIR: /tmp/hermes
@@ -54,7 +54,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.output.react-native-version }}
 
   build_apple_slices_hermes:
-    runs-on: macos-14
+    runs-on: self-hosted
     needs: [build_hermesc_apple, prepare_hermes_workspace]
     env:
       HERMES_WS_DIR: /tmp/hermes
@@ -80,7 +80,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   build_hermes_macos:
-    runs-on: macos-14
+    runs-on: self-hosted
     needs: [build_apple_slices_hermes, prepare_hermes_workspace]
     env:
       HERMES_WS_DIR: /tmp/hermes
@@ -105,7 +105,7 @@ jobs:
     secrets: inherit
 
   build_hermesc_linux:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: prepare_hermes_workspace
     env:
       HERMES_WS_DIR: /tmp/hermes
@@ -120,7 +120,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   build_hermesc_windows:
-    runs-on: windows-2025
+    runs-on: self-hosted
     needs: prepare_hermes_workspace
     env:
       HERMES_WS_DIR: 'D:\tmp\hermes'
@@ -139,7 +139,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   build_android:
-    runs-on: 8-core-ubuntu
+    runs-on: self-hosted
     needs: [set_release_type]
     container:
       image: reactnativecommunity/react-native-android:latest
@@ -160,7 +160,7 @@ jobs:
           gradle-cache-encryption-key: ${{ secrets.GRADLE_CACHE_ENCRYPTION_KEY }}
 
   build_npm_package:
-    runs-on: 8-core-ubuntu
+    runs-on: self-hosted
     needs:
       [
         set_release_type,
