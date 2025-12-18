@@ -58,8 +58,6 @@ body:
         - Runtime - Web
         - Runtime - Desktop
         - Build - MacOS
-        - Build - Windows
-        - Build - Linux
         - Other (please specify)
     validations:
       required: true
