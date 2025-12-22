@@ -68,7 +68,7 @@ jobs:
       - name: Setup xcode
         uses: ./.github/actions/setup-xcode
         with:
-          xcode-version: '16.1'
+          xcode-version: '16.2'
       - name: Restore slice folder
         id: restore-slice-folder
         uses: actions/cache/restore@v4
@@ -131,7 +131,7 @@ jobs:
       - name: Setup xcode
         uses: ./.github/actions/setup-xcode
         with:
-          xcode-version: '16.1'
+          xcode-version: '16.2'
       - name: Restore XCFramework
         id: restore-xcframework
         uses: actions/cache/restore@v4
