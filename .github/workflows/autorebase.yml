@@ -13,7 +13,7 @@ jobs:
     permissions:
       contents: write # for cirrus-actions/rebase to push code to rebase
       pull-requests: read # for cirrus-actions/rebase to get info about PR
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')
     steps:
       - name: Checkout the latest code

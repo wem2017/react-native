@@ -11,7 +11,7 @@ on:
 # The key is used directly as the <pkg> in the `yarn add <pkg>` command.
 jobs:
   runner-setup:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     outputs:
       runners: '{"ios":"macos-14-large", "android": "ubuntu-latest"}'
     steps:
@@ -81,7 +81,7 @@ jobs:
 
 
   collect-results:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: [test-library-on-nightly]
     steps:
       - name: Checkout

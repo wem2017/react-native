@@ -7,7 +7,7 @@ on:
 jobs:
   prepare_workspace:
     name: Prepare workspace
-    runs-on: self-hosted
+    runs-on: macos-14
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
 
   build-apple-slices:
     name: Build Apple Slice
-    runs-on: self-hosted
+    runs-on: macos-14
     needs: [prepare_workspace]
     strategy:
       fail-fast: false
@@ -68,7 +68,7 @@ jobs:
       - name: Setup xcode
         uses: ./.github/actions/setup-xcode
         with:
-          xcode-version: '16.2'
+          xcode-version: '16.1'
       - name: Restore slice folder
         id: restore-slice-folder
         uses: actions/cache/restore@v4
@@ -114,7 +114,7 @@ jobs:
 
   create-xcframework:
     name: Prepare XCFramework
-    runs-on: self-hosted
+    runs-on: macos-14
     needs: [build-apple-slices]
     strategy:
       fail-fast: false
@@ -131,7 +131,7 @@ jobs:
       - name: Setup xcode
         uses: ./.github/actions/setup-xcode
         with:
-          xcode-version: '16.2'
+          xcode-version: '16.1'
       - name: Restore XCFramework
         id: restore-xcframework
         uses: actions/cache/restore@v4

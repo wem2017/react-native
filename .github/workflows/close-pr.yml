@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   comment-and-label:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: github.repository == 'master'
     steps:
       - uses: actions/github-script@v6
